@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App</title>
+    <link rel="stylesheet" href="/static/css/chat.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <style>
+        #chatbot {
+            height: 3000vh; /* Hauteur maximale de la div */
+            overflow-y:auto; /* Activer la barre de défilement verticale */
+            /* Masquer la barre de défilement pour les navigateurs Webkit (Chrome, Safari) */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+    }
+
+    /* Masquer la barre de défilement pour les navigateurs Webkit (Chrome, Safari) */
+    #chatbot::-webkit-scrollbar {
+        display: none;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- Person selector: this contains buttons for user to select whether to chat as John or Jane -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/static/logo.png" alt="Logo Djezzy" style="height: 100px; margin-left: 20px;">
+        </div>
+        <ul>
+            <li><a href="/historique">Historique de conversation</a></li>
+            <li><a href="/logout">     Déconnexion</a></li>
+        </ul>
+    </div>
+    <div class="chat-container">
+      <h2 class="chat-header">DJEZZY BOT</h2>
+      <p class="botText" style="color:rgb(254, 255, 252); font-size: larger;">  Salut {{user_name.capitalize}}, avez vous des questions sur notre service Djezzy?  </p>
+      <div id="chatbot">
+        
+      </div>
+
+      <div class="chat-messages">
+        
+      </div>
+
+      <div class="chat-input-form">
+        <input type="text" id="textInput" class="chat-input" name="userMessage" placeholder="Entrer votre message ici ..." autofocus  required />
+        <button type="submit" id="buttonInput" class="button send-button">Envoyer</button>
+      </div>
+      
+    </div>
+
+    <script>
+        function getUserResponse(){
+            var userText =   $('#textInput').val();
+            var userHtml = "<div class='message blue-bg'> <div class='message-sender'>{{user_name}}</div> <div class='message-text'>"+userText+"</div></div>";
+            $('#textInput').val("");
+    
+            $('#chatbot').append(userHtml);
+    
+            $.get('/getResponse',{userMessage:userText}).done(function(data){
+                var returnedMessage = "<div class='message gray-bg'> <div class='message-senderr'>Djezzybot </div>"+ "<div class='message-textt'>"+ data + "</div></div>";
+                    $('#chatbot').append(returnedMessage);
+    
+            })
+        }
+    
+        $('#buttonInput').click(function(){
+            getUserResponse();
+        })
+    </script>
+  </body>
+</html>

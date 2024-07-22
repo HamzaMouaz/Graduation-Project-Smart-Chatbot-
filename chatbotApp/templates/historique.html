@@ -1,0 +1,94 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <!- Inclure les ressources CSS et JavaScript nécessaires pour Gradio --
+    <link rel="stylesheet" href="/static/chatbot/style.css">    
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1>Djezzybot Application</h1>
+    <div id="userInput">
+        <h2>Conversations précédentes :</h2>
+        {% for conversation in user_conversations %}
+            <p class="userText"> {{ user_name }}: <span>{{ conversation.message }}</span> </p>
+            <p class="botText"> Chatbot: <span>{{ conversation.response }}</span> </p>
+        {% endfor %}
+    </div>
+    <div>
+        <div id="chatbot">
+            <p class="botText"> <span> Hi {{user_name.capitalize}}, avez vous des questions sur notre service Djezzy? </span> </p>
+        </div>
+
+        
+
+        <div id="userInput">
+            <input type="text" id="textInput" name="userMessage" placeholder="Entrer votre message ici ..." autofocus/>
+            <input type="submit" value="Send" id="buttonInput"/> 
+        </div>
+    </div>
+
+<script>
+    function getUserResponse(){
+        var userText =   $('#textInput').val();
+        var userHtml = "<p class='userText'>{{user_name}}: <span>"+userText+"</span></p>";
+        $('#textInput').val("");
+
+        $('#chatbot').append(userHtml);
+
+        $.get('/getResponse',{userMessage:userText}).done(function(data){
+            var returnedMessage = "<p class='botText'>CHatbot: <span>"+ data + "</span/></p>";
+                $('#chatbot').append(returnedMessage);
+
+        })
+    }
+
+    $('#buttonInput').click(function(){
+        getUserResponse();
+    })
+</script>
+</body>
+</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <!-- Inclure les ressources CSS et JavaScript nécessaires pour Gradio -->
+    <link rel="stylesheet" href="/static/chatbot/style.css">    
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <style>
+        #conversationHistory {
+            max-height: 300px; /* Hauteur maximale de la div */
+            overflow-y: auto; /* Activer la barre de défilement verticale */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/static/logo.png" alt="Logo Djezzy">
+        </div>
+        <ul>
+        
+            <li><a href="/chatbot">Revenir au chatbot</a></li>
+        </ul>
+    </div>
+
+        <div class="content">
+        
+            <div id="conversationHistory">
+                <h2>Conversations précédentes :</h2>
+                {% for conversation in user_conversations %}
+                    <p class="userText"> {{ user_name }}: <span>{{ conversation.message }}</span> </p>
+                    <p class="botText"> Chatbot: <span>{{ conversation.response }}</span> </p>
+                {% endfor %}
+            </div>
+        
+        </div>
+
+</body>
+</html>

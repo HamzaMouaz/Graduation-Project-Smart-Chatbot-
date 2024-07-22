@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <title>login</title>
+</head>
+<body>
+<header>
+<div class="center">
+    <!-- <nav class="navigation"> -->
+        <!-- <button class="k"><i class="fas fa-bars"></i></button> -->
+        <!-- </nav> -->
+        <!-- <a href="djezzy.php" class="logo">DJEZZY  </a> -->
+
+    </div>
+</header> 
+<div class="div_input">
+    <form name="LoginForm" action="{% url 'login' %}" method="post"> <!-- Remplacez 'redirect_page' par le nom de votre vue de redirection -->
+        {% csrf_token %}
+        <div class="jnt-stack">
+            <input type="text" name="username" placeholder=" Nom d'utilisateur" required><br>
+            <input type="password" name="password" placeholder=" Mot de passe" required><br>
+        </div>
+        
+        <button class="button1" type="submit"><h2 class="login">Connecter</h2></button> <br><br><br><br>
+        <div class="signup-link">  Pas un membre? <a href="{% url 'signup' %}">Créer un compte</a></div>
+    </form>
+	 <div class="rectangle">
+		<div class="eclipse"></div>
+     <img src="/static/logo.png" alt="" >
+	 </div>
+	 </div> 
+</body>
+</html>

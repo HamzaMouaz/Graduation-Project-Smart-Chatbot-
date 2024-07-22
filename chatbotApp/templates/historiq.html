@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat App</title>
+    <link rel="stylesheet" href="/static/css/chat.css" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <style>
+        #conversationHistory {
+            height: 3000vh; /* Hauteur maximale de la div */
+            overflow-y:auto; /* Activer la barre de défilement verticale */
+            /* Masquer la barre de défilement pour les navigateurs Webkit (Chrome, Safari) */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+    }
+
+    /* Masquer la barre de défilement pour les navigateurs Webkit (Chrome, Safari) */
+    #chatbot::-webkit-scrollbar {
+        display: none;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- Person selector: this contains buttons for user to select whether to chat as John or Jane -->
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/static/logo.png" alt="Logo Djezzy" style="height: 100px; margin-left: 20px;">
+        </div>
+        <ul>
+            <li><a href="/chatbot">Revenir au chatbot</a></li>
+        </ul>
+    </div>
+    <div class="chat-container">
+     
+        <div id="conversationHistory">
+            <h2 style="color:rgb(217, 223, 223); font-size: larger;">Conversations précédentes :</h2>
+            {% for conversation in user_conversations %}
+            <div class="message blue-bg">
+                <div class="message-sender">{{ user_name.capitalize }}</div>
+                <div class="message-text">{{ conversation.message }}</div>
+            </div>
+            <div class="message gray-bg">
+                <div class="message-senderr">Djezzybot</div>
+                <div class="message-textt">{{ conversation.response }}</div>
+            </div>
+            {% endfor %}
+        </div>
+      
+    </div>
+  </body>
+</html>
